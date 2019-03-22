@@ -1,0 +1,66 @@
+application {
+  config {
+    baseName store,
+    applicationType gateway,
+    packageName com.jhipster.demo.store,
+    serviceDiscoveryType eureka,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    cacheProvider ehcache,
+    buildTool gradle,
+    testFrameworks [protractor]
+  }
+  entities *
+}
+application {
+  config {
+    baseName invoice,
+    applicationType microservice,
+    packageName com.jhipster.demo.invoice,
+    serviceDiscoveryType eureka,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    buildTool gradle,
+    serverPort 8081,
+    skipUserManagement true
+  }
+  entities Invoice
+}
+application {
+  config {
+    baseName notification,
+    applicationType microservice,
+    packageName com.jhipster.demo.notification,
+    serviceDiscoveryType eureka,
+    authenticationType jwt,
+    prodDatabaseType postgresql,
+    buildTool gradle,
+    serverPort 8082,
+    skipUserManagement true
+  }
+  entities Notification
+}
+/* Entities for Store Gateway */
+/** Product sold by the Online store */
+entity Product {
+    name String required
+    description String
+    price BigDecimal required min(0)
+}
+service Product with serviceClass
+paginate Product with pagination
+/* Entities for Invoice microservice */
+entity Invoice {
+    code String required
+    details String
+}
+service Invoice with serviceClass
+paginate Invoice with pagination
+microservice Invoice with invoice
+/* Entities for notification microservice */
+entity Notification {
+    date Instant required
+    details String
+}
+microservice Notification with notification
+
